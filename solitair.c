@@ -115,3 +115,16 @@ void play()
 	drawBoard(int, int);
 	winState(int);
 }
+
+drawBoard (int left, int right)
+{
+	printf("+-----+-----+---+-----+-----+\n|HOLD |LEFT |///|RIGHT|HOLD |\n+-----+-----+---+-----+-----+");
+
+	for (size_t i = 0; i < count; i++)
+	{
+		printf("|     |  *  |///|  *  |     |");
+	}
+
+	printf("+-----+-----+---+-----+-----+\n|SUM = %d                   |\n+---------------------------+", &DEFAULT_SUM);
+	
+}
