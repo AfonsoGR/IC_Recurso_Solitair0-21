@@ -17,8 +17,7 @@ double uniRand(void);
 double randn(double, double);
 int randn_sat(double, double, int, int);
 void drawBoard(int);
-void playGame(int);
-/*int playerMove();*/
+void playerMove(int);
 int updateSum(int, int);
 /*void boardUpdate();*/
 
@@ -37,6 +36,8 @@ int main(int argc, char ** argv)
 	int nhold = DEFAULT_NHOLDS;
 	int currentSum = DEFAULT_SUM;
 	/*board game;*/
+	int left[DEFAULT_NROWS];
+	int right[DEFAULT_NROWS];
 
 	if (argc == 5)
 	{
@@ -46,8 +47,6 @@ int main(int argc, char ** argv)
 		sscanf(argv[3], "%d", &nrows);
 		sscanf(argv[4], "%d", &nhold);
 		
-		int left[nrows];
-		int right[nrows];
 
 		/* Initialize the random seed of the board */
 		srand(seed);
@@ -74,7 +73,8 @@ int main(int argc, char ** argv)
 		/* Core game loop */
 		while (currentSum > 0 || currentSum < 21)
 		{
-			void playGame(int currentSum);
+			void playerMove(int currentSum);
+			/*void boardUpdate();*/
 		}
 		
 		return 0;
@@ -135,15 +135,6 @@ int randn_sat(double mean, double std, int min, int max)
 	return (int) (r > max ? max : r < min ? min : r);
 }
 
-void playGame(int currentSum)
-{
-	currentSum = currentSum;
-
-	/*int playerMove();*/
-	int updateSum(int currentSum, int playerChoice);
-	/*void boardUpdate();*/
-}
-
 void drawBoard (int nrows)
 {
 	printf("+-----+-----+---+-----+-----+\n|HOLD |LEFT |///|RIGHT|HOLD |\n+-----+-----+---+-----+-----+");
@@ -161,4 +152,31 @@ int updateSum(int currentSum, int playerChoice)
 	currentSum += playerChoice;
 
 	return currentSum; 
+}
+
+void playerMove(int currentSum)
+{
+	int playerChoice = 0;
+	char option;
+	scanf("%c", &option);
+
+	switch (option)
+	{
+		case 'a':
+		/*Add to total sum from left column array*/
+		case 's':
+		/*Add to total sum from right column array*/
+		case 'q':
+		/*Add to left hold array from left column array*/
+		case 'w':
+		/*Add to right hold column array from right column array*/
+		case 'z':
+		/*Remove from left hold column array to total sum*/
+		case 'x':
+		/*Remove from right hold column array to total sum*/
+		default:
+			printf("Please select a valid move...");
+	}
+
+	int updateSum(int currentSum, int playerChoice);
 }
