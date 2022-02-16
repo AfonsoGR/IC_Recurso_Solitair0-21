@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 
+/* Constant variables */
 #define MSG_WIN "You Win! Congratulations!"
 #define MSG_LOSE "You Lost! Better luck next time!"
 #define DEFAULT_SUM 10
@@ -11,23 +12,34 @@
 #define DEFAULT_LEVEL 3	
 #define PI 3.14159265358979
 
-/* needed functions */
+/* Function declaration */
 double uniRand(void);
 double randn(double, double);
 int randn_sat(double, double, int, int);
+void drawBoard(int);
+void playGame(int);
+/*int playerMove();*/
+int updateSum(int, int);
+/*void boardUpdate();*/
 
-typedef struct _board
+/*typedef struct _board
 {
 	int * left;
 	int * right;
 	
-} board;
+} board;*/
 
 int main(int argc, char ** argv)
 {	
-	long seed = DEFAULT_SEED;
-	int level = DEFAULT_LEVEL, nrows = DEFAULT_NROWS, nhold = DEFAULT_NHOLDS;
-	board game;
+	long seed;
+	int level = DEFAULT_LEVEL; 
+	int nrows = DEFAULT_NROWS;
+	int nhold = DEFAULT_NHOLDS;
+	int currentSum = DEFAULT_SUM;
+	/*board game;*/
+
+	int left[DEFAULT_NROWS];
+	int right[DEFAULT_NROWS];
 	
 	/* Verify for command line arguments */
 	sscanf(argv[1], "%d", &level);
@@ -35,25 +47,33 @@ int main(int argc, char ** argv)
 	sscanf(argv[3], "%d", &nrows);
 	sscanf(argv[4], "%d", &nhold);
 
-
 	/* Initialize the random seed of the board */
 	srand(seed);
 	
-	/* Alloc memory */
-	board.left = (int *) malloc(100*sizeof(int));
-	board.right = (int *) malloc(100*sizeof(int));
+	/* Allocs memory */
+	/*board.*left = (int *) malloc(100*sizeof(int));
+	board.*right = (int *) malloc(100*sizeof(int));*/
 	
-	/* generate numbers left: */
-	for (int i = 0 ; i < nrows ; i++)
-		left[i] = randn_sat(0, level, -21, 21);
 
-	/* generate numbers right: */
+	/* Generate numbers for the right column: */
 	for (int i = 0 ; i < nrows ; i++)
-		right[i] = randn_sat(0, level, -21, 21);
-
-	while (true)
 	{
-		playGame(nrows);
+		left[i] = randn_sat(0, level, -21, 21);
+	}
+
+	/* Generate numbers for the right column: */
+	for (int i = 0 ; i < nrows ; i++)
+	{
+		right[i] = randn_sat(0, level, -21, 21);
+	}
+
+	/* Draws the board's initial state based on arguments */
+	void drawBoard(int nrows);
+
+	/* Core game loop */
+	while (currentSum > 0 || currentSum < 21)
+	{
+		void playGame(int currentSum);
 	}
 	
 	return 0;
@@ -69,7 +89,6 @@ double uniRand()
 {
 	return (double) rand() / double RAND_MAX;
 }
-
 
 /* function: randn()
  * return: double
@@ -110,13 +129,14 @@ int randn_sat(double mean, double std, int min, int max)
 	return (int) (r > max ? max : r < min ? min : r);
 }
 
-void playGame(int nrows)
+void playGame(int currentSum)
 {
-	drawBoard(nrows);
-	/*winState(currentSum);*/
+	/*int playerMove();*/
+	int updateSum(int currentSum, int playerChoice);
+	/*void boardUpdate();*/
 }
 
-drawBoard (int nrows)
+void drawBoard (int nrows)
 {
 	printf("+-----+-----+---+-----+-----+\n|HOLD |LEFT |///|RIGHT|HOLD |\n+-----+-----+---+-----+-----+");
 
@@ -125,6 +145,12 @@ drawBoard (int nrows)
 		printf("|     |  *  |///|  *  |     |");
 	}
 
-	printf("+-----+-----+---+-----+-----+\n|SUM = %d                   |\n+---------------------------+", &DEFAULT_SUM);
-	
+	printf("+-----+-----+---+-----+-----+\n|SUM = %d                   |\n+---------------------------+", DEFAULT_SUM);
+}
+
+int updateSum(int currentSum, int playerChoice)
+{
+	currentSum += playerChoice;
+
+	return currentSum; 
 }
