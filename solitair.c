@@ -17,8 +17,7 @@ double uniRand(void);
 double randn(double, double);
 int randn_sat(double, double, int, int);
 void drawBoard(int);
-void playerMove(int);
-int updateSum(int, int);
+int playerMove(int);
 /*void boardUpdate();*/
 
 /*typedef struct _board
@@ -73,7 +72,7 @@ int main(int argc, char ** argv)
 		/* Core game loop */
 		while (currentSum > 0 || currentSum < 21)
 		{
-			void playerMove(int currentSum);
+			int playerMove(int currentSum);
 			/*void boardUpdate();*/
 		}
 		
@@ -147,14 +146,7 @@ void drawBoard (int nrows)
 	printf("+-----+-----+---+-----+-----+\n|SUM = %d                   |\n+---------------------------+", DEFAULT_SUM);
 }
 
-int updateSum(int currentSum, int playerChoice)
-{
-	currentSum += playerChoice;
-
-	return currentSum; 
-}
-
-void playerMove(int currentSum)
+int playerMove(int currentSum)
 {
 	int playerChoice = 0;
 	char option;
@@ -178,5 +170,7 @@ void playerMove(int currentSum)
 			printf("Please select a valid move...");
 	}
 
-	int updateSum(int currentSum, int playerChoice);
+	currentSum += playerChoice;
+
+	return currentSum:
 }
