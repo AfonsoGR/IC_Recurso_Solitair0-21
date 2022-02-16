@@ -172,5 +172,5 @@ int playerMove(int currentSum)
 
 	currentSum += playerChoice;
 
-	return currentSum:
+	return currentSum;
 }
