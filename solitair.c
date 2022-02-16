@@ -16,9 +16,8 @@
 double uniRand(void);
 double randn(double, double);
 int randn_sat(double, double, int, int);
-void drawBoard(int);
+void drawBoard(int, int);
 int playerMove(int);
-/*void boardUpdate();*/
 
 /*typedef struct _board
 {
@@ -35,8 +34,32 @@ int main(int argc, char ** argv)
 	int nhold = DEFAULT_NHOLDS;
 	int currentSum = DEFAULT_SUM;
 	/*board game;*/
-	int left[DEFAULT_NROWS];
-	int right[DEFAULT_NROWS];
+
+	/* Allocs memory */
+		/*board.*left = (int *) malloc(100*sizeof(int));
+		board.*right = (int *) malloc(100*sizeof(int));*/
+	
+	int left[nrows];
+	int right[nrows];
+	int holdLeft[nhold];
+	int holdRight[nhold];
+
+	printf("%d", left[0]);
+	printf("%d", right[0]);
+	printf("%d", holdLeft[0]);
+	printf("%d", holdRight[0]);
+
+	/* Generate numbers for the right column: */
+	for (int i = 0 ; i < nrows ; i++)
+	{
+		left[i] = randn_sat(0, level, -21, 21);
+	}
+
+	/* Generate numbers for the right column: */
+	for (int i = 0 ; i < nrows ; i++)
+	{
+		right[i] = randn_sat(0, level, -21, 21);
+	}
 
 	if (argc == 5)
 	{
@@ -49,31 +72,15 @@ int main(int argc, char ** argv)
 
 		/* Initialize the random seed of the board */
 		srand(seed);
-		
-		/* Allocs memory */
-		/*board.*left = (int *) malloc(100*sizeof(int));
-		board.*right = (int *) malloc(100*sizeof(int));*/
-
-		/* Generate numbers for the right column: */
-		for (int i = 0 ; i < nrows ; i++)
-		{
-			left[i] = randn_sat(0, level, -21, 21);
-		}
-
-		/* Generate numbers for the right column: */
-		for (int i = 0 ; i < nrows ; i++)
-		{
-			right[i] = randn_sat(0, level, -21, 21);
-		}
 
 		/* Draws the board's initial state based on arguments */
-		void drawBoard(int nrows);
+		void drawBoard(int nrows, int currentSum);
 
 		/* Core game loop */
 		while (currentSum > 0 || currentSum < 21)
 		{
 			int playerMove(int currentSum);
-			/*void boardUpdate();*/
+			void drawBoard(int nrows, int currentSum);
 		}
 		
 		return 0;
@@ -92,7 +99,7 @@ int main(int argc, char ** argv)
  */
 double uniRand()
 {
-	return (double) rand() / 1;
+	return (double) rand() / RAND_MAX;
 }
 
 /* function: randn()
@@ -134,7 +141,7 @@ int randn_sat(double mean, double std, int min, int max)
 	return (int) (r > max ? max : r < min ? min : r);
 }
 
-void drawBoard (int nrows)
+void drawBoard (int nrows, int currentSum)
 {
 	printf("+-----+-----+---+-----+-----+\n|HOLD |LEFT |///|RIGHT|HOLD |\n+-----+-----+---+-----+-----+");
 
@@ -143,31 +150,40 @@ void drawBoard (int nrows)
 		printf("|     |  *  |///|  *  |     |");
 	}
 
-	printf("+-----+-----+---+-----+-----+\n|SUM = %d                   |\n+---------------------------+", DEFAULT_SUM);
+	printf("+-----+-----+---+-----+-----+\n|SUM = %d                   |\n+---------------------------+", currentSum);
 }
 
 int playerMove(int currentSum)
 {
 	int playerChoice = 0;
 	char option;
+	
 	scanf("%c", &option);
 
 	switch (option)
 	{
 		case 'a':
-		/*Add to total sum from left column array*/
+			/*Add to total sum from left column array*/
+			/*board.left[-1] = playerChoice;*/
 		case 's':
-		/*Add to total sum from right column array*/
+			/*Add to total sum from right column array*/
+			/*board.right[-1] = playerChoice;*/
 		case 'q':
-		/*Add to left hold array from left column array*/
+			/*Add to left hold array from left column array*/
+			/*holdLeft[0] = board.left[-1]*/
 		case 'w':
-		/*Add to right hold column array from right column array*/
+			/*Add to right hold array from right column array*/
+			/*holdRight[0] = board.right[-1]*/
 		case 'z':
-		/*Remove from left hold column array to total sum*/
+			/*Remove from left hold column array to total sum*/
+			/*holdLeft[-1] = playerChoice;*/
 		case 'x':
-		/*Remove from right hold column array to total sum*/
+			/*Remove from right hold column array to total sum*/
+			/*holdRight[-1] = playerChoice;*/
+		case 'e':
+			exit(0);
 		default:
-			printf("Please select a valid move...");
+			printf("\nPlease press a valid option.\n");
 	}
 
 	currentSum += playerChoice;
