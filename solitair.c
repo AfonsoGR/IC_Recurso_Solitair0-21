@@ -143,14 +143,14 @@ int randn_sat(double mean, double std, int min, int max)
 
 void drawBoard (int nrows, int currentSum)
 {
-	printf("+-----+-----+---+-----+-----+\n|HOLD |LEFT |///|RIGHT|HOLD |\n+-----+-----+---+-----+-----+");
+	printf("\n+-----+-----+---+-----+-----+\n|HOLD |LEFT |///|RIGHT|HOLD |\n+-----+-----+---+-----+-----+\n");
 
 	for (int i = 0; i < nrows; i++)
 	{
-		printf("|     |  *  |///|  *  |     |");
+		printf("|     |  *  |///|  *  |     |\n");
 	}
 
-	printf("+-----+-----+---+-----+-----+\n|SUM = %d                   |\n+---------------------------+", currentSum);
+	printf("+-----+-----+---+-----+-----+\n|SUM = %d                   |\n+---------------------------+\n", currentSum);
 }
 
 int playerMove(int currentSum)
