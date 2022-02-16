@@ -38,45 +38,51 @@ int main(int argc, char ** argv)
 	int currentSum = DEFAULT_SUM;
 	/*board game;*/
 
-	int left[DEFAULT_NROWS];
-	int right[DEFAULT_NROWS];
-	
-	/* Verify for command line arguments */
-	sscanf(argv[1], "%d", &level);
-	sscanf(argv[2], "%ld", &seed);
-	sscanf(argv[3], "%d", &nrows);
-	sscanf(argv[4], "%d", &nhold);
-
-	/* Initialize the random seed of the board */
-	srand(seed);
-	
-	/* Allocs memory */
-	/*board.*left = (int *) malloc(100*sizeof(int));
-	board.*right = (int *) malloc(100*sizeof(int));*/
-	
-
-	/* Generate numbers for the right column: */
-	for (int i = 0 ; i < nrows ; i++)
+	if (argc == 5)
 	{
-		left[i] = randn_sat(0, level, -21, 21);
-	}
+		/* Verify for command line arguments */
+		sscanf(argv[1], "%d", &level);
+		sscanf(argv[2], "%ld", &seed);
+		sscanf(argv[3], "%d", &nrows);
+		sscanf(argv[4], "%d", &nhold);
+		
+		int left[nrows];
+		int right[nrows];
 
-	/* Generate numbers for the right column: */
-	for (int i = 0 ; i < nrows ; i++)
+		/* Initialize the random seed of the board */
+		srand(seed);
+		
+		/* Allocs memory */
+		/*board.*left = (int *) malloc(100*sizeof(int));
+		board.*right = (int *) malloc(100*sizeof(int));*/
+
+		/* Generate numbers for the right column: */
+		for (int i = 0 ; i < nrows ; i++)
+		{
+			left[i] = randn_sat(0, level, -21, 21);
+		}
+
+		/* Generate numbers for the right column: */
+		for (int i = 0 ; i < nrows ; i++)
+		{
+			right[i] = randn_sat(0, level, -21, 21);
+		}
+
+		/* Draws the board's initial state based on arguments */
+		void drawBoard(int nrows);
+
+		/* Core game loop */
+		while (currentSum > 0 || currentSum < 21)
+		{
+			void playGame(int currentSum);
+		}
+		
+		return 0;
+	}
+	else
 	{
-		right[i] = randn_sat(0, level, -21, 21);
+		printf("Lacking needed arguments");
 	}
-
-	/* Draws the board's initial state based on arguments */
-	void drawBoard(int nrows);
-
-	/* Core game loop */
-	while (currentSum > 0 || currentSum < 21)
-	{
-		void playGame(int currentSum);
-	}
-	
-	return 0;
 }
 
 /* function: uniRand()
@@ -87,7 +93,7 @@ int main(int argc, char ** argv)
  */
 double uniRand()
 {
-	return (double) rand() / double RAND_MAX;
+	return (double) rand() / 1;
 }
 
 /* function: randn()
@@ -131,6 +137,8 @@ int randn_sat(double mean, double std, int min, int max)
 
 void playGame(int currentSum)
 {
+	currentSum = currentSum;
+
 	/*int playerMove();*/
 	int updateSum(int currentSum, int playerChoice);
 	/*void boardUpdate();*/
