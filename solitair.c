@@ -53,7 +53,7 @@ int main(int argc, char ** argv)
 
 	while (true)
 	{
-		playGame();
+		playGame(nrows);
 	}
 	
 	return 0;
@@ -110,17 +110,17 @@ int randn_sat(double mean, double std, int min, int max)
 	return (int) (r > max ? max : r < min ? min : r);
 }
 
-void play()
+void playGame(int nrows)
 {
-	drawBoard(int, int);
-	winState(int);
+	drawBoard(nrows);
+	/*winState(currentSum);*/
 }
 
-drawBoard (int left, int right)
+drawBoard (int nrows)
 {
 	printf("+-----+-----+---+-----+-----+\n|HOLD |LEFT |///|RIGHT|HOLD |\n+-----+-----+---+-----+-----+");
 
-	for (size_t i = 0; i < count; i++)
+	for (int i = 0; i < nrows; i++)
 	{
 		printf("|     |  *  |///|  *  |     |");
 	}
