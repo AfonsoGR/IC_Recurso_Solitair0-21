@@ -16,7 +16,7 @@
 double uniRand(void);
 double randn(double, double);
 int randn_sat(double, double, int, int);
-void drawBoard(int, int);
+void drawBoard(int, int, int [], int [], int [], int []);
 int playerMove(int, int [], int [], int [], int []);
 
 /*typedef struct _board
@@ -83,13 +83,13 @@ int main(int argc, char ** argv)
 		srand(seed);
 
 		/* Draws the board's initial state based on arguments */
-		void drawBoard(int nrows, int currentSum);
+		void drawBoard(int nrows, int currentSum, int left[], int right[], int holdLeft[], int holdRight[]);
 
 		/* Core game loop */
 		while (currentSum > 0 || currentSum < 21)
 		{
 			int playerMove(int currentSum, int left[], int right[], int holdLeft[], int holdRight[]);
-			void drawBoard(int nrows, int currentSum);
+			void drawBoard( int nrows, int currentSum, int left[], int right[], int holdLeft[], int holdRight[]);
 		}
 		
 		return 0;
@@ -150,13 +150,13 @@ int randn_sat(double mean, double std, int min, int max)
 	return (int) (r > max ? max : r < min ? min : r);
 }
 
-void drawBoard (int nrows, int currentSum)
+void drawBoard (int nrows, int currentSum, int left[], int right[], int holdLeft[], int holdRight[])
 {
 	printf("\n+-----+-----+---+-----+-----+\n|HOLD |LEFT |///|RIGHT|HOLD |\n+-----+-----+---+-----+-----+\n");
 
 	for (int i = 0; i < nrows; i++)
 	{
-		printf("|     |  *  |///|  *  |     |\n");
+		printf("|  %d  |  %d  |///|  %d  |  %d  |\n", holdLeft[i], left[i], right[i], holdRight[i]);
 	}
 
 	printf("+-----+-----+---+-----+-----+\n|SUM = %d                   |\n+---------------------------+\n", currentSum);
