@@ -174,25 +174,33 @@ int playerMove(int currentSum, int left[], int right[], int holdLeft[], int hold
 		case 'a':
 			/* Assign value from left column array to player choice */
 			left[-1] = playerChoice;
+			break;
 		case 's':
 			/* Assign value from left column array to player choice */
 			right[-1] = playerChoice;
+			break;
 		case 'q':
 			/*Add to left hold array from left column array*/
 			holdLeft[-1] = left[-1];
+			break;
 		case 'w':
 			/*Add to right hold array from right column array*/
 			holdRight[-1] = right[-1];
+			break;
 		case 'z':
 			/* Assign value from left hold column array to player choice */
 			holdLeft[-1] = playerChoice;
+			break;
 		case 'x':
 			/* Assign value from left hold column array to player choice */
 			holdRight[-1] = playerChoice;
+			break;
 		case 'e':
 			exit(0);
+			break;
 		default:
 			printf("\nPlease press a valid option.\n");
+			break;
 	}
 
 	currentSum += playerChoice;
