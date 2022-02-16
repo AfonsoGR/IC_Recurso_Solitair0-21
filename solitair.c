@@ -17,7 +17,7 @@ double uniRand(void);
 double randn(double, double);
 int randn_sat(double, double, int, int);
 void drawBoard(int, int);
-int playerMove(int);
+int playerMove(int, int [], int [], int [], int []);
 
 /*typedef struct _board
 {
@@ -43,22 +43,31 @@ int main(int argc, char ** argv)
 	int right[nrows];
 	int holdLeft[nhold];
 	int holdRight[nhold];
-
-	printf("%d", left[0]);
-	printf("%d", right[0]);
-	printf("%d", holdLeft[0]);
-	printf("%d", holdRight[0]);
-
-	/* Generate numbers for the right column: */
-	for (int i = 0 ; i < nrows ; i++)
+	
+	/* Set initial values for left hold column */
+	for (int i = 0 ; i < nhold ; i++)
 	{
-		left[i] = randn_sat(0, level, -21, 21);
+		holdLeft[i] = 0;
+		printf("Initial hold value set to %d", holdLeft[i]);
+	}
+	/* Set initial values for right hold column */
+	for (int i = 0 ; i < nhold ; i++)
+	{
+		holdRight[i] = 0;
+		printf("Initial hold value set to %d", holdRight[i]);
 	}
 
 	/* Generate numbers for the right column: */
 	for (int i = 0 ; i < nrows ; i++)
 	{
+		left[i] = randn_sat(0, level, -21, 21);
+		printf("Value %d added", left[i]);
+	}
+	/* Generate numbers for the right column: */
+	for (int i = 0 ; i < nrows ; i++)
+	{
 		right[i] = randn_sat(0, level, -21, 21);
+		printf("Value %d added", right[i]);
 	}
 
 	if (argc == 5)
@@ -79,7 +88,7 @@ int main(int argc, char ** argv)
 		/* Core game loop */
 		while (currentSum > 0 || currentSum < 21)
 		{
-			int playerMove(int currentSum);
+			int playerMove(int currentSum, int left[], int right[], int holdLeft[], int holdRight[]);
 			void drawBoard(int nrows, int currentSum);
 		}
 		
@@ -153,7 +162,7 @@ void drawBoard (int nrows, int currentSum)
 	printf("+-----+-----+---+-----+-----+\n|SUM = %d                   |\n+---------------------------+\n", currentSum);
 }
 
-int playerMove(int currentSum)
+int playerMove(int currentSum, int left[], int right[], int holdLeft[], int holdRight[])
 {
 	int playerChoice = 0;
 	char option;
@@ -163,23 +172,23 @@ int playerMove(int currentSum)
 	switch (option)
 	{
 		case 'a':
-			/*Add to total sum from left column array*/
-			/*board.left[-1] = playerChoice;*/
+			/* Assign value from left column array to player choice */
+			left[-1] = playerChoice;
 		case 's':
-			/*Add to total sum from right column array*/
-			/*board.right[-1] = playerChoice;*/
+			/* Assign value from left column array to player choice */
+			right[-1] = playerChoice;
 		case 'q':
 			/*Add to left hold array from left column array*/
-			/*holdLeft[0] = board.left[-1]*/
+			holdLeft[-1] = left[-1];
 		case 'w':
 			/*Add to right hold array from right column array*/
-			/*holdRight[0] = board.right[-1]*/
+			holdRight[-1] = right[-1];
 		case 'z':
-			/*Remove from left hold column array to total sum*/
-			/*holdLeft[-1] = playerChoice;*/
+			/* Assign value from left hold column array to player choice */
+			holdLeft[-1] = playerChoice;
 		case 'x':
-			/*Remove from right hold column array to total sum*/
-			/*holdRight[-1] = playerChoice;*/
+			/* Assign value from left hold column array to player choice */
+			holdRight[-1] = playerChoice;
 		case 'e':
 			exit(0);
 		default:
